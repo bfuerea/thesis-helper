@@ -1,222 +1,366 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PhD Dashboard</title>
-    <!-- Include Tailwind CSS via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        darkMode: 'class'
-      };
-    </script>
-    <!-- Include Lucide Icons via CDN -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-  </head>
-  <body class="min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-sans p-4 md:p-8 transition-colors duration-300">
-    <div class="max-w-6xl mx-auto">
-      <!-- Header -->
-      <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
-        <div>
-          <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100 italic">MVT: Minimum Viable Thesis</h1>
-          <p class="text-rose-600 font-bold mt-1 flex items-center gap-2">
-            <i data-lucide="shield-alert" class="w-4 h-4"></i>
-            WARNING: Avoid Technical Rabbit Holes!
-          </p>
-        </div>
-        <div class="flex items-center gap-2">
-          <div class="flex bg-white dark:bg-slate-800 p-1 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm self-start">
-            <button id="tab-overview" class="px-4 py-2 rounded-md text-sm font-medium transition-all bg-rose-600 text-white shadow-md">
-              Priority Sprints
-            </button>
-            <button id="tab-timelines" class="px-4 py-2 rounded-md text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700">
-              Strict Deadlines
-            </button>
-          </div>
-          <button id="theme-toggle" class="p-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all" aria-label="Toggle dark mode">
-            <i data-lucide="sun" class="w-4 h-4 hidden dark:block"></i>
-            <i data-lucide="moon" class="w-4 h-4 block dark:hidden"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Tab Content: Overview -->
-      <div id="content-overview" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <!-- Task List -->
-        <div class="lg:col-span-2 space-y-6" id="task-list">
-          <!-- Tasks will be injected here by JavaScript -->
-        </div>
-
-        <!-- Scope Guard Sidebar -->
-        <div class="space-y-6">
-          <div class="bg-rose-900 dark:bg-rose-950 rounded-xl p-6 text-white shadow-lg border-2 border-rose-400 dark:border-rose-800">
-            <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
-              <i data-lucide="shield-alert" class="w-5 h-5 text-rose-300"></i>
-              Scope Guard
-            </h3>
-            <div class="space-y-4">
-              <div class="p-3 bg-white/10 rounded-lg">
-                <p class="text-xs font-bold text-rose-200 uppercase mb-2">The Zotero Rule</p>
-                <p class="text-sm">CSL is "Almost Perfect". Editing it further is <strong>zero-value</strong> for your doctorate. Lock the file now.</p>
-              </div>
-              <div class="p-3 bg-white/10 rounded-lg border border-rose-500">
-                <p class="text-xs font-bold text-rose-200 uppercase mb-2">Relevance Filter</p>
-                <ul class="space-y-2" id="relevance-list">
-                  <!-- Questions will be injected here -->
-                </ul>
-              </div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>PhD Dashboard</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                darkMode: "class",
+            };
+        </script>
+        <script src="https://unpkg.com/lucide@latest"></script>
+    </head>
+    <body
+        class="min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-sans p-4 md:p-8 transition-colors duration-300"
+    >
+        <div class="max-w-6xl mx-auto">
+            <div
+                class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4"
+            >
+                <div>
+                    <h1
+                        class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100 italic"
+                    >
+                        MVT: Minimum Viable Thesis
+                    </h1>
+                    <p
+                        class="text-rose-600 font-bold mt-1 flex items-center gap-2"
+                    >
+                        <i data-lucide="shield-alert" class="w-4 h-4"></i>
+                        WARNING: Avoid Technical Rabbit Holes!
+                    </p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div
+                        class="flex bg-white dark:bg-slate-800 p-1 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm self-start"
+                    >
+                        <button
+                            id="tab-overview"
+                            class="px-4 py-2 rounded-md text-sm font-medium transition-all bg-rose-600 text-white shadow-md"
+                        >
+                            Priority Sprints
+                        </button>
+                        <button
+                            id="tab-timelines"
+                            class="px-4 py-2 rounded-md text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700"
+                        >
+                            Strict Deadlines
+                        </button>
+                    </div>
+                    <button
+                        id="theme-toggle"
+                        class="p-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all"
+                        aria-label="Toggle dark mode"
+                    >
+                        <i
+                            data-lucide="sun"
+                            class="w-4 h-4 hidden dark:block"
+                        ></i>
+                        <i
+                            data-lucide="moon"
+                            class="w-4 h-4 block dark:hidden"
+                        ></i>
+                    </button>
+                </div>
             </div>
-          </div>
 
-          <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
-            <h3 class="font-bold text-slate-800 dark:text-slate-200 mb-4 flex items-center gap-2">
-              <i data-lucide="search" class="w-4 h-4 text-indigo-500"></i>
-              Digitalization Focus
-            </h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">
-              Does your technical struggle contribute to the field of <strong>Digital Pathology</strong>?
-            </p>
-            <div class="space-y-2">
-              <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
-                <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
-                <span>Database Interoperability (GBIF)</span>
-              </div>
-              <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
-                <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
-                <span>Virtual Slide Accessibility (OSD)</span>
-              </div>
-              <div class="flex items-center gap-2 text-xs text-slate-400 dark:text-slate-500 line-through">
-                <div class="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-600"></div>
-                <span>Infinite UI polishing (Taxonomy Demo)</span>
-              </div>
+            <div
+                id="content-overview"
+                class="grid grid-cols-1 lg:grid-cols-3 gap-8"
+            >
+                <div class="lg:col-span-2 space-y-6" id="task-list"></div>
+
+                <div class="space-y-6">
+                    <div
+                        class="bg-rose-900 dark:bg-rose-950 rounded-xl p-6 text-white shadow-lg border-2 border-rose-400 dark:border-rose-800"
+                    >
+                        <h3
+                            class="text-lg font-bold mb-4 flex items-center gap-2"
+                        >
+                            <i
+                                data-lucide="shield-alert"
+                                class="w-5 h-5 text-rose-300"
+                            ></i>
+                            Scope Guard
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="p-3 bg-white/10 rounded-lg">
+                                <p
+                                    class="text-xs font-bold text-rose-200 uppercase mb-2"
+                                >
+                                    The Zotero Rule
+                                </p>
+                                <p class="text-sm">
+                                    CSL is "Almost Perfect". Editing it further
+                                    is
+                                    <strong class="text-rose-300"
+                                        >zero-value</strong
+                                    >
+                                    for your doctorate. Lock the file now.
+                                </p>
+                            </div>
+                            <div
+                                class="p-3 bg-white/10 rounded-lg border border-rose-500"
+                            >
+                                <p
+                                    class="text-xs font-bold text-rose-200 uppercase mb-2"
+                                >
+                                    Relevance Filter
+                                </p>
+                                <ul class="space-y-2" id="relevance-list"></ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6"
+                    >
+                        <h3
+                            class="font-bold text-slate-800 dark:text-slate-200 mb-4 flex items-center gap-2"
+                        >
+                            <i
+                                data-lucide="search"
+                                class="w-4 h-4 text-indigo-500"
+                            ></i>
+                            Digitalization Focus
+                        </h3>
+                        <p
+                            class="text-xs text-slate-500 dark:text-slate-400 mb-4"
+                        >
+                            Does your technical struggle contribute to the field
+                            of
+                            <strong class="text-slate-700 dark:text-slate-300"
+                                >Digital Pathology</strong
+                            >?
+                        </p>
+                        <div class="space-y-2">
+                            <div
+                                class="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400"
+                            >
+                                <div
+                                    class="w-2 h-2 rounded-full bg-emerald-500"
+                                ></div>
+                                <span>Database Interoperability (GBIF)</span>
+                            </div>
+                            <div
+                                class="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400"
+                            >
+                                <div
+                                    class="w-2 h-2 rounded-full bg-emerald-500"
+                                ></div>
+                                <span>Virtual Slide Accessibility (OSD)</span>
+                            </div>
+                            <div
+                                class="flex items-center gap-2 text-xs text-slate-400 dark:text-slate-500 line-through"
+                            >
+                                <div
+                                    class="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-600"
+                                ></div>
+                                <span
+                                    >Infinite UI polishing (Taxonomy Demo)</span
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6"
+                    >
+                        <h3
+                            class="font-bold text-slate-800 dark:text-slate-200 mb-4 flex items-center gap-2"
+                        >
+                            <i
+                                data-lucide="file-text"
+                                class="w-4 h-4 text-emerald-500"
+                            ></i>
+                            MVT Page Volume Tracker
+                        </h3>
+                        <p
+                            class="text-xs text-slate-500 dark:text-slate-400 mb-3"
+                        >
+                            Target: Max 150 pages (USAMV Norm 1.3). Ensure Part
+                            II outweighs Part I.
+                            <br /><span
+                                class="italic text-slate-400 dark:text-slate-500"
+                                >Data loaded from Heading_Pages_Export.csv</span
+                            >
+                        </p>
+                        <div class="space-y-4" id="volume-tracker">
+                            <div
+                                class="text-xs text-slate-400 dark:text-slate-500 italic"
+                            >
+                                Loading page data...
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
 
-          <!-- Thesis Volume MVT Tracker -->
-          <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
-            <h3 class="font-bold text-slate-800 dark:text-slate-200 mb-4 flex items-center gap-2">
-              <i data-lucide="file-text" class="w-4 h-4 text-emerald-500"></i>
-              MVT Page Volume Tracker
-            </h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">
-              Target: Max 150 pages (USAMV Norm 1.3). Ensure Part II outweighs Part I.
-              <br><span class="italic text-slate-400 dark:text-slate-500">Data loaded from Heading_Pages_Export.csv</span>
-            </p>
-            <div class="space-y-4" id="volume-tracker">
-              <div class="text-xs text-slate-400 dark:text-slate-500 italic">Loading page data...</div>
+            <div
+                id="content-timelines"
+                class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-8 hidden"
+            >
+                <h2
+                    class="text-xl font-bold text-slate-800 dark:text-slate-200 mb-6"
+                >
+                    Countdown to Defense (Working Backwards)
+                </h2>
+                <div class="space-y-4" id="timeline-list"></div>
             </div>
-          </div>
         </div>
-      </div>
 
-      <!-- Tab Content: Timelines -->
-      <div id="content-timelines" class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-8 hidden">
-        <h2 class="text-xl font-bold text-slate-800 dark:text-slate-200 mb-6">Countdown to Defense (Working Backwards)</h2>
-        <div class="space-y-4" id="timeline-list">
-          <!-- Timelines will be injected here -->
-        </div>
-      </div>
-    </div>
+        <script>
+            // Data
+            const tasks = [
+                {
+                    id: 1,
+                    category: "Thesis",
+                    title: "Part 1 Re-reading & Citations",
+                    detail: "CRITICAL PRIORITY: Add in-line citations and expand references list across Part I. Do not move forward until this is solid.",
+                    priority: "Highest",
+                    deadline: "May 15",
+                    subtasks: [
+                        "Batch 1: First 30 pages citation check (2 days)",
+                        "Batch 2: Remaining pages (2 days)",
+                        'Self-Citation Check: Ensure "Impact of Cost-Effective Digital Slides Platform on Grades of Romanian Veterinary Students" is prominently referenced.',
+                        "Reference Audit: Check for missing DOI/links (1 day)",
+                    ],
+                    failsafe:
+                        'Zotero CSL is marked "PERFECT". Do not edit XML/CSS styles again. Use current output.',
+                },
+                {
+                    id: 2,
+                    category: "Thesis",
+                    title: "Part 2 Finalization & Database Stats",
+                    detail: "Finish drafting from published articles. Add database statistics and standardization struggles across Part II. Mandatory before upload.",
+                    priority: "High",
+                    deadline: "May 18",
+                    subtasks: [
+                        "Integrate existing text from published articles (1 day)",
+                        "Draft Database Statistics interpretation chapter (2 days)",
+                        "Document MongoDB standardization and WSI NAS (TrueNAS/Synology) volume management struggles (1 day)",
+                        "Send to supervisor for mandatory review (1 day)",
+                    ],
+                    failsafe:
+                        "If advanced statistical analysis takes too long, stick to basic descriptive stats (e.g., top 10 species/organs) and heavily emphasize the qualitative journey of cleaning archive data.",
+                },
+                {
+                    id: 3,
+                    category: "Digital Lab",
+                    title: "MongoDB Standardization [COMPLETE]",
+                    detail: "Collections for Species, Breeds, and Organs created and mapped using GBIF/CoL for the pathology lab.",
+                    priority: "Low",
+                    deadline: "Completed",
+                    subtasks: [
+                        "Map current fields to GBIF backbone ✓",
+                        "Upsert Species/Breeds collections ✓",
+                        "Verify with vet-taxonomy-demo ✓",
+                    ],
+                    failsafe: "Completed. No further action required.",
+                },
+                {
+                    id: 4,
+                    category: "Digital Lab",
+                    title: "OpenSeadragon Optimization",
+                    detail: "Data from .szi successfully extracted and served via FastAPI V3. Currently viewable via SlideViewerDemoV3. Just need the final automation pipeline.",
+                    priority: "Low",
+                    deadline: "No Deadline (Nice-to-have)",
+                    subtasks: [
+                        "Write Python script (or cron/watchdog) to automatically schedule .szi extraction and route files to correct NAS folder.",
+                        "Add basic automation tests for the scheduler script to ensure reliability.",
+                        "Document current SVS -> DZI workflow in thesis as the stable baseline.",
+                    ],
+                    failsafe:
+                        "Stick to the working SVS -> DZI local conversion pipeline. Do not overwork the NAS compute resources.",
+                },
+            ];
 
-    <!-- JavaScript for Logic -->
-    <script>
-      // Data
-      const tasks = [
-        { 
-          id: 1, 
-          category: 'Thesis', 
-          title: 'Part 1 Re-reading & Citations', 
-          detail: 'Add in-line citations and expand references list across Part I.', 
-          priority: 'High',
-          deadline: 'May 15',
-          subtasks: [
-            'Batch 1: First 30 pages citation check (2 days)',
-            'Batch 2: Remaining pages (2 days)',
-            'Reference Audit: Check for missing DOI/links (1 day)'
-          ],
-          failsafe: 'Zotero CSL is marked "PERFECT". Do not edit XML/CSS styles again. Use current output.'
-        },
-        { 
-          id: 2, 
-          category: 'Thesis', 
-          title: 'Part 2 Finalization & Database Stats', 
-          detail: 'Finish drafting from published articles. Add database statistics and standardization struggles across Part II. Mandatory before upload.', 
-          priority: 'High',
-          deadline: 'May 18',
-          subtasks: [
-            'Integrate existing text from published articles (1 day)',
-            'Draft Database Statistics interpretation chapter (2 days)',
-            'Document MongoDB/archive standardization struggles (1 day)',
-            'Send to supervisor for mandatory review (1 day)'
-          ],
-          failsafe: 'If advanced statistical analysis takes too long, stick to basic descriptive stats (e.g., top 10 species/organs) and heavily emphasize the qualitative journey of cleaning archive data.'
-        },
-        { 
-          id: 3, 
-          category: 'Digital Lab', 
-          title: 'MongoDB Standardization', 
-          detail: 'Create collections for Species, Breeds, Organs using GBIF/CoL.', 
-          priority: 'High',
-          deadline: 'May 10',
-          subtasks: [
-            'Map current fields to GBIF backbone (1 day)',
-            'Upsert Species/Breeds collections (1 day)',
-            'Verify with vet-taxonomy-demo (1 day)'
-          ],
-          failsafe: 'If taxonomy-demo takes >4 hours more, pivot to documenting the "Mapping Obstacles" as a thesis chapter.'
-        },
-        { 
-          id: 4, 
-          category: 'Digital Lab', 
-          title: 'OpenSeadragon Optimization', 
-          detail: 'Current SVS to DZI local conversion works perfectly. Direct .szi unzipping on NAS is a future enhancement.', 
-          priority: 'Low',
-          deadline: 'No Deadline (Nice-to-have)',
-          subtasks: [
-            'Document current SVS -> DZI workflow in thesis as the stable baseline.',
-            'Optional: Test .szi unzipping on NAS only if extra time permits.'
-          ],
-          failsafe: 'Stick to the working SVS -> DZI local conversion pipeline. Do not overwork the NAS compute resources.'
-        }
-      ];
+            const questions = [
+                "Does this specific subtask help digitize a pathology slide or record?",
+                "Am I fixing a bug that 90% of the committee won't notice?",
+                "Could this 'deep dive' be replaced by a single paragraph explaining the limitation?",
+                "Is the Zotero CSL 'Good Enough' for USAMV standards? (Yes, stop touching it).",
+            ];
 
-      const questions = [
-        "Does this specific subtask help digitize a pathology slide or record?",
-        "Am I fixing a bug that 90% of the committee won't notice?",
-        "Could this 'deep dive' be replaced by a single paragraph explaining the limitation?",
-        "Is the Zotero CSL 'Good Enough' for USAMV standards? (Yes, stop touching it)."
-      ];
+            const timelines = [
+                {
+                    stage: "Public Submission",
+                    time: "Min 25 days",
+                    detail: 'Must have a "Good Enough" draft ready.',
+                },
+                {
+                    stage: "Public Announcement",
+                    time: "Min 20 days",
+                    detail: "Thesis title and summary become unchangeable.",
+                },
+                {
+                    stage: "Public Defense",
+                    time: "Day 0",
+                    detail: "The goal: Becoming Dr. Fuerea.",
+                },
+            ];
 
-      const timelines = [
-        { stage: 'Public Submission', time: 'Min 25 days', detail: 'Must have a "Good Enough" draft ready.' },
-        { stage: 'Public Announcement', time: 'Min 20 days', detail: 'Thesis title and summary become unchangeable.' },
-        { stage: 'Public Defense', time: 'Day 0', detail: 'The goal: Becoming Dr. [Your Name].' }
-      ];
+            // Render Functions
+            function renderTasks() {
+                const container = document.getElementById("task-list");
+                container.innerHTML = tasks
+                    .map((task) => {
+                        const isHighest = task.priority === "Highest";
+                        const isHigh =
+                            task.priority === "High" ||
+                            task.priority === "Highest";
+                        const isComplete = task.deadline === "Completed";
 
-      // Render Functions
-      function renderTasks() {
-        const container = document.getElementById('task-list');
-        container.innerHTML = tasks.map(task => `
-          <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border overflow-hidden border-l-4 ${task.priority === 'High' ? 'border-slate-200 dark:border-slate-700 border-l-rose-500' : 'border-slate-200 dark:border-slate-700 border-l-slate-400 opacity-80'}">
+                        let borderClass = "border-l-slate-400 opacity-80";
+                        let iconClass = "text-slate-500 dark:text-slate-400";
+                        let badgeClass =
+                            "text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-700";
+
+                        if (isHighest) {
+                            borderClass =
+                                "border-rose-500 shadow-md ring-1 ring-rose-500/20";
+                            iconClass = "text-rose-600";
+                            badgeClass =
+                                "text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-900/30 ring-1 ring-rose-500/30";
+                        } else if (isHigh) {
+                            borderClass = "border-l-rose-400";
+                            iconClass = "text-rose-500";
+                            badgeClass =
+                                "text-rose-500 dark:text-rose-400 bg-rose-50 dark:bg-rose-900/20";
+                        } else if (isComplete) {
+                            borderClass =
+                                "border-l-emerald-500 opacity-75 bg-slate-50/30";
+                            iconClass = "text-emerald-500";
+                            badgeClass =
+                                "text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20";
+                        }
+
+                        return `
+          <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border overflow-hidden border-l-4 border-slate-200 dark:border-slate-700 ${borderClass}">
             <div class="p-4 border-b border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/50 flex items-center justify-between">
               <div class="flex items-center gap-2">
-                <i data-lucide="target" class="w-4 h-4 ${task.priority === 'High' ? 'text-rose-600' : 'text-slate-500 dark:text-slate-400'}"></i>
+                <i data-lucide="${isComplete ? "check-circle" : "target"}" class="w-4 h-4 ${iconClass}"></i>
                 <h3 class="font-bold text-slate-800 dark:text-slate-200 uppercase tracking-tight">${task.category}: ${task.title}</h3>
               </div>
-              <span class="text-xs font-bold px-2 py-1 rounded ${task.priority === 'High' ? 'text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-900/30' : 'text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-700'}">
-                ${task.deadline === 'No Deadline (Nice-to-have)' ? 'NICE-TO-HAVE' : `DEADLINE: ${task.deadline}`}
+              <span class="text-xs font-bold px-2 py-1 rounded ${badgeClass}">
+                ${task.deadline === "No Deadline (Nice-to-have)" ? "NICE-TO-HAVE" : task.deadline === "Completed" ? "DONE" : `DEADLINE: ${task.deadline}`}
               </span>
             </div>
             <div class="p-5">
               <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">${task.detail}</p>
               <div class="space-y-2 mb-4">
-                ${task.subtasks.map(sub => `
+                ${task.subtasks
+                    .map(
+                        (sub) => `
                   <div class="flex items-center gap-3 text-sm text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-700/50 p-2 rounded border border-slate-100 dark:border-slate-600">
-                    <i data-lucide="check" class="w-3 h-3 text-slate-300 dark:text-slate-500"></i>
+                    <i data-lucide="check" class="w-3 h-3 ${sub.includes("✓") || isComplete ? "text-emerald-500" : "text-slate-300 dark:text-slate-500"}"></i>
                     ${sub}
                   </div>
-                `).join('')}
+                `,
+                    )
+                    .join("")}
               </div>
               <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-100 dark:border-amber-800/30 p-3 rounded-lg flex items-start gap-3">
                 <i data-lucide="zap" class="w-4 h-4 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0"></i>
@@ -227,20 +371,28 @@
               </div>
             </div>
           </div>
-        `).join('');
-      }
+        `;
+                    })
+                    .join("");
+            }
 
-      function renderQuestions() {
-        document.getElementById('relevance-list').innerHTML = questions.map(q => `
+            function renderQuestions() {
+                document.getElementById("relevance-list").innerHTML = questions
+                    .map(
+                        (q) => `
           <li class="text-xs flex items-start gap-2 text-white/90">
             <div class="mt-1 w-1 h-1 rounded-full bg-rose-300 flex-shrink-0"></div>
             ${q}
           </li>
-        `).join('');
-      }
+        `,
+                    )
+                    .join("");
+            }
 
-      function renderTimelines() {
-        document.getElementById('timeline-list').innerHTML = timelines.map(d => `
+            function renderTimelines() {
+                document.getElementById("timeline-list").innerHTML = timelines
+                    .map(
+                        (d) => `
           <div class="flex gap-4 p-4 border rounded-lg border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-700/30">
             <div class="text-rose-600 dark:text-rose-400 font-black text-xl italic whitespace-nowrap min-w-[120px]">${d.time}</div>
             <div>
@@ -248,24 +400,33 @@
               <p class="text-sm text-slate-500 dark:text-slate-400">${d.detail}</p>
             </div>
           </div>
-        `).join('');
-      }
+        `,
+                    )
+                    .join("");
+            }
 
-      async function loadVolumeTracker() {
-        const container = document.getElementById('volume-tracker');
-        const targetPages = 150;
-        
-        // Embedded fallback data from Heading_Pages_Export.csv
-        // Part I: 25 pages, Part II: 53 pages
-        const fallbackData = { partI: 25, partII: 53 };
-        
-        function renderTracker(partIPages, partIIPages, source) {
-          const totalPages = partIPages + partIIPages;
-          const partIPercent = Math.min(Math.round((partIPages / targetPages) * 100), 100);
-          const partIIPercent = Math.min(Math.round((partIIPages / targetPages) * 100), 100);
-          const ratio = partIPages > 0 ? (partIIPages / partIPages).toFixed(1) : 0;
-          
-          container.innerHTML = `
+            async function loadVolumeTracker() {
+                const container = document.getElementById("volume-tracker");
+                const targetPages = 150;
+
+                const fallbackData = { partI: 25, partII: 53 };
+
+                function renderTracker(partIPages, partIIPages, source) {
+                    const totalPages = partIPages + partIIPages;
+                    const partIPercent = Math.min(
+                        Math.round((partIPages / targetPages) * 100),
+                        100,
+                    );
+                    const partIIPercent = Math.min(
+                        Math.round((partIIPages / targetPages) * 100),
+                        100,
+                    );
+                    const ratio =
+                        partIPages > 0
+                            ? (partIIPages / partIPages).toFixed(1)
+                            : 0;
+
+                    container.innerHTML = `
             <div>
               <div class="flex justify-between text-xs mb-1">
                 <span class="font-semibold text-slate-700 dark:text-slate-300">Part I (Lit. Review)</span>
@@ -291,169 +452,144 @@
               </div>
               <div class="flex justify-between items-center text-xs">
                 <span class="text-slate-500 dark:text-slate-400">Part II / Part I Ratio</span>
-                <span class="font-semibold ${ratio >= 2 ? 'text-emerald-600 dark:text-emerald-400' : ratio >= 1.5 ? 'text-amber-600 dark:text-amber-400' : 'text-rose-600 dark:text-rose-400'}">${ratio}:1 ${ratio >= 2 ? '(Excellent)' : ratio >= 1.5 ? '(Good)' : '(Needs more Part II)'}</span>
+                <span class="font-semibold ${ratio >= 2 ? "text-emerald-600 dark:text-emerald-400" : ratio >= 1.5 ? "text-amber-600 dark:text-amber-400" : "text-rose-600 dark:text-rose-400"}">${ratio}:1 ${ratio >= 2 ? "(Excellent)" : ratio >= 1.5 ? "(Good)" : "(Needs more Part II)"}</span>
               </div>
-              ${source !== 'csv' ? `
+              ${
+                  source !== "csv"
+                      ? `
               <div class="mt-2 text-xs text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 p-2 rounded">
                 <i data-lucide="info" class="w-3 h-3 inline mr-1"></i>
-                Using embedded data${source === 'error' ? ' (CSV failed to load)' : ''}. Last updated: May 2025
+                Using embedded data${source === "error" ? " (CSV failed to load)" : ""}. Last updated: May 2026
               </div>
-              ` : ''}
+              `
+                      : ""
+              }
             </div>
           `;
-          if (typeof lucide !== 'undefined') lucide.createIcons();
-        }
-        
-        try {
-          const csvPath = './Heading_Pages_Export.csv';
-          console.log('Fetching CSV from:', csvPath);
-          
-          const response = await fetch(csvPath, { cache: 'no-cache' });
-          console.log('CSV response status:', response.status, response.ok);
-          
-          if (!response.ok) {
-            console.warn('CSV fetch failed, using fallback data');
-            renderTracker(fallbackData.partI, fallbackData.partII, 'error');
-            return;
-          }
-          
-          const csvText = await response.text();
-          console.log('CSV loaded, length:', csvText.length);
-          
-          if (!csvText || csvText.trim().length === 0) {
-            throw new Error('CSV file is empty');
-          }
-          
-          const lines = csvText.trim().split(/\r?\n/);
-          console.log('CSV lines:', lines.length);
-          
-          if (lines.length < 2) {
-            throw new Error('CSV has no data rows');
-          }
-          
-          const headers = lines[0].split(',').map(h => h.trim());
-          console.log('CSV headers:', headers);
-          
-          const outlineLevelIdx = headers.indexOf('Outline_Level');
-          const headingTextIdx = headers.indexOf('Heading_Text');
-          const pageCountIdx = headers.indexOf('Page_Count');
-          
-          console.log('Column indices:', { outlineLevelIdx, headingTextIdx, pageCountIdx });
-          
-          if (outlineLevelIdx === -1 || headingTextIdx === -1 || pageCountIdx === -1) {
-            throw new Error('Required columns not found in CSV');
-          }
-          
-          let partIPages = 0;
-          let partIIPages = 0;
-          
-          for (let i = 1; i < lines.length; i++) {
-            const line = lines[i].trim();
-            if (!line) continue;
-            
-            const cols = line.split(',');
-            if (cols.length < Math.max(outlineLevelIdx, headingTextIdx, pageCountIdx) + 1) continue;
-            
-            const level = parseInt(cols[outlineLevelIdx], 10);
-            const heading = (cols[headingTextIdx] || '').replace(/^"|"$/g, '');
-            const pageCount = parseInt(cols[pageCountIdx], 10) || 0;
-            
-            if (level === 1) {
-              console.log('Found Level 1 heading:', heading, 'Pages:', pageCount);
-              // Check Part I first (Partea I: with colon, or Bibliographic study text)
-              if (heading.includes('Partea I:') || heading.includes('Bibliographic  study')) {
-                partIPages = pageCount;
-                console.log('Part I pages set to:', partIPages);
-              } else if (heading.includes('Partea II:') || heading.includes('Personal Research')) {
-                partIIPages = pageCount;
-                console.log('Part II pages set to:', partIIPages);
-              }
+                    if (typeof lucide !== "undefined") lucide.createIcons();
+                }
+
+                try {
+                    const csvPath = "./Heading_Pages_Export.csv";
+                    const response = await fetch(csvPath, {
+                        cache: "no-cache",
+                    });
+                    if (!response.ok) {
+                        renderTracker(
+                            fallbackData.partI,
+                            fallbackData.partII,
+                            "error",
+                        );
+                        return;
+                    }
+                    const csvText = await response.text();
+                    if (!csvText || csvText.trim().length === 0)
+                        throw new Error("CSV empty");
+                    const lines = csvText.trim().split(/\r?\n/);
+                    const headers = lines[0].split(",").map((h) => h.trim());
+                    const outlineLevelIdx = headers.indexOf("Outline_Level");
+                    const headingTextIdx = headers.indexOf("Heading_Text");
+                    const pageCountIdx = headers.indexOf("Page_Count");
+
+                    let partIPages = 0;
+                    let partIIPages = 0;
+                    for (let i = 1; i < lines.length; i++) {
+                        const line = lines[i].trim();
+                        if (!line) continue;
+                        const cols = line.split(",");
+                        const level = parseInt(cols[outlineLevelIdx], 10);
+                        const heading = (cols[headingTextIdx] || "").replace(
+                            /^"|"$/g,
+                            "",
+                        );
+                        const pageCount = parseInt(cols[pageCountIdx], 10) || 0;
+                        if (level === 1) {
+                            if (
+                                heading.includes("Partea I:") ||
+                                heading.includes("Bibliographic  study")
+                            )
+                                partIPages = pageCount;
+                            else if (
+                                heading.includes("Partea II:") ||
+                                heading.includes("Personal Research")
+                            )
+                                partIIPages = pageCount;
+                        }
+                    }
+                    if (partIPages === 0 && partIIPages === 0)
+                        renderTracker(
+                            fallbackData.partI,
+                            fallbackData.partII,
+                            "fallback",
+                        );
+                    else renderTracker(partIPages, partIIPages, "csv");
+                } catch (error) {
+                    renderTracker(
+                        fallbackData.partI,
+                        fallbackData.partII,
+                        "error",
+                    );
+                }
             }
-          }
-          
-          if (partIPages === 0 && partIIPages === 0) {
-            console.warn('No page data found in CSV, using fallback');
-            renderTracker(fallbackData.partI, fallbackData.partII, 'fallback');
-          } else {
-            renderTracker(partIPages, partIIPages, 'csv');
-          }
-          
-        } catch (error) {
-          console.error('Error loading CSV:', error);
-          renderTracker(fallbackData.partI, fallbackData.partII, 'error');
-        }
-      }
 
-      // Tab Switching Logic
-      const btnOverview = document.getElementById('tab-overview');
-      const btnTimelines = document.getElementById('tab-timelines');
-      const contentOverview = document.getElementById('content-overview');
-      const contentTimelines = document.getElementById('content-timelines');
+            // Tab Switching Logic
+            const btnOverview = document.getElementById("tab-overview");
+            const btnTimelines = document.getElementById("tab-timelines");
+            const contentOverview = document.getElementById("content-overview");
+            const contentTimelines =
+                document.getElementById("content-timelines");
 
-      function switchTab(tab) {
-        if (tab === 'overview') {
-          // Update Buttons
-          btnOverview.className = 'px-4 py-2 rounded-md text-sm font-medium transition-all bg-rose-600 text-white shadow-md';
-          btnTimelines.className = 'px-4 py-2 rounded-md text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700';
-          // Show/Hide Content
-          contentOverview.classList.remove('hidden');
-          contentTimelines.classList.add('hidden');
-        } else {
-          // Update Buttons
-          btnOverview.className = 'px-4 py-2 rounded-md text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700';
-          btnTimelines.className = 'px-4 py-2 rounded-md text-sm font-medium transition-all bg-rose-600 text-white shadow-md';
-          // Show/Hide Content
-          contentOverview.classList.add('hidden');
-          contentTimelines.classList.remove('hidden');
-        }
-      }
+            function switchTab(tab) {
+                if (tab === "overview") {
+                    btnOverview.className =
+                        "px-4 py-2 rounded-md text-sm font-medium transition-all bg-rose-600 text-white shadow-md";
+                    btnTimelines.className =
+                        "px-4 py-2 rounded-md text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700";
+                    contentOverview.classList.remove("hidden");
+                    contentTimelines.classList.add("hidden");
+                } else {
+                    btnOverview.className =
+                        "px-4 py-2 rounded-md text-sm font-medium transition-all text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700";
+                    btnTimelines.className =
+                        "px-4 py-2 rounded-md text-sm font-medium transition-all bg-rose-600 text-white shadow-md";
+                    contentOverview.classList.add("hidden");
+                    contentTimelines.classList.remove("hidden");
+                }
+            }
 
-      // Theme Toggle
-      const themeToggle = document.getElementById('theme-toggle');
-      
-      function initTheme() {
-        const savedTheme = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        
-        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-          document.documentElement.classList.add('dark');
-        } else {
-          document.documentElement.classList.remove('dark');
-        }
-      }
-      
-      function toggleTheme() {
-        if (document.documentElement.classList.contains('dark')) {
-          document.documentElement.classList.remove('dark');
-          localStorage.setItem('theme', 'light');
-        } else {
-          document.documentElement.classList.add('dark');
-          localStorage.setItem('theme', 'dark');
-        }
-        // Re-render icons after theme change
-        if (typeof lucide !== 'undefined') {
-          lucide.createIcons();
-        }
-      }
-      
-      themeToggle.addEventListener('click', toggleTheme);
+            const themeToggle = document.getElementById("theme-toggle");
+            function initTheme() {
+                const savedTheme = localStorage.getItem("theme");
+                const prefersDark = window.matchMedia(
+                    "(prefers-color-scheme: dark)",
+                ).matches;
+                if (savedTheme === "dark" || (!savedTheme && prefersDark))
+                    document.documentElement.classList.add("dark");
+                else document.documentElement.classList.remove("dark");
+            }
+            function toggleTheme() {
+                if (document.documentElement.classList.contains("dark")) {
+                    document.documentElement.classList.remove("dark");
+                    localStorage.setItem("theme", "light");
+                } else {
+                    document.documentElement.classList.add("dark");
+                    localStorage.setItem("theme", "dark");
+                }
+                if (typeof lucide !== "undefined") lucide.createIcons();
+            }
 
-      btnOverview.addEventListener('click', () => switchTab('overview'));
-      btnTimelines.addEventListener('click', () => switchTab('timelines'));
+            themeToggle.addEventListener("click", toggleTheme);
+            btnOverview.addEventListener("click", () => switchTab("overview"));
+            btnTimelines.addEventListener("click", () =>
+                switchTab("timelines"),
+            );
 
-      // Initialize
-      initTheme();
-      renderTasks();
-      renderQuestions();
-      renderTimelines();
-      loadVolumeTracker();
-      
-      // Initialize Lucide Icons after content is injected
-      if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-      } else {
-        console.warn('Lucide icons failed to load');
-      }
-    </script>
-  </body>
+            initTheme();
+            renderTasks();
+            renderQuestions();
+            renderTimelines();
+            loadVolumeTracker();
+            if (typeof lucide !== "undefined") lucide.createIcons();
+        </script>
+    </body>
 </html>

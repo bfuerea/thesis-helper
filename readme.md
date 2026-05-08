@@ -1,13 +1,9 @@
-Since this is a personal productivity tool designed to keep you focused and prevent "technical rabbit holes," the README should be practical, reminding you how to maintain the dashboard without spending too much time on the dashboard itself.
-
-Here is a suggested `README.md`.
-
 ***
 
 # 🎓 MVT Dashboard: Minimum Viable Thesis
 
 ## Overview
-The **MVT (Minimum Viable Thesis) Dashboard** is a lightweight, single-page project management tool designed for the final stages of a PhD. Instead of a complex Jira or Trello board, this dashboard serves as a **psychological anchor**, keeping the focus on the "Minimum Viable" requirements for graduation and providing a strict guard against technical over-engineering (rabbit holes).
+The **MVT (Minimum Viable Thesis) Dashboard** is a lightweight, single-page project management tool designed for the final stages of a PhD in Veterinary Pathology Digitization. Instead of a complex Jira or Trello board, this dashboard serves as a **psychological anchor**, keeping the focus on the "Minimum Viable" requirements for graduation and providing a strict guard against technical over-engineering (rabbit holes).
 
 ## 🎯 Core Philosophy
 The dashboard is built around the **MVT Principle**: 
@@ -17,15 +13,16 @@ It prioritizes:
 1. **Submission over Perfection**: Focuses on "Good Enough" standards for committees.
 2. **Scope Guarding**: Constant reminders to stop polishing UI or fixing minor bugs that don't contribute to the doctoral degree.
 3. **Volume Balance**: Ensuring the personal research (Part II) outweighs the literature review (Part I).
+4. **Leveraging Existing Expertise**: Treating pipeline additions (like the `.szi` to NAS extraction) as an automation engineering problem. Write the Python/JS scheduler, write the tests, deploy it, and move immediately back to writing the manuscript.
 
 ## 🚀 Features
 
 ### 1. Priority Sprints
-A categorized task list that visually differentiates between **Highest/High** priority (critical path) and **Low** priority (nice-to-have). Each task includes a "Pivot Command" (Failsafe) to tell you exactly when to stop and move on.
+A categorized task list that visually differentiates between **Highest/High** priority (critical path, currently locked to Part 1 completion) and **Low** priority (nice-to-have/completed tasks like MongoDB Standardization). Each task includes a "Pivot Command" (Failsafe) to tell you exactly when to stop and move on.
 
 ### 2. Thesis Volume Tracker
 A dynamic progress bar that reads a CSV file (`Heading_Pages_Export.csv`) to track:
-- Total page count against the 150-page target.
+- Total page count against the 150-page target (USAMV Norm 1.3).
 - The ratio between Part I and Part II.
 - Visual alerts if Part II is not sufficiently larger than Part I.
 
@@ -47,34 +44,38 @@ Simply open `index.html` in any web browser.
 ### Customization & Maintenance
 
 #### Updating Tasks & Deadlines
-To update your goals, open `index.html` and edit the `tasks` array in the `<script>` section:
+To update your goals, open `index.html` and edit the `tasks` array in the `<script>` section. 
+
+*Example of a standard task format:*
 ```javascript
 const tasks = [
   { 
-    id: 1, 
-    category: 'Thesis', 
-    title: 'Task Name', 
-    detail: 'Description...', 
-    priority: 'Highest', // Options: Highest, High, Low
-    deadline: 'May 15',
-    subtasks: ['Subtask A', 'Subtask B'],
-    failsafe: 'Stop if X happens...'
+    id: 4, 
+    category: 'Digital Lab', 
+    title: 'OpenSeadragon Optimization', 
+    detail: 'Extracted data from .szi can be served via FastAPI V3 and viewed via SlideViewerDemoV3.', 
+    priority: 'Low',
+    deadline: 'No Deadline (Nice-to-have)',
+    subtasks: [
+      'Add Python/Node.js scheduler to extract from .szi and place files in the NAS folder.',
+      'Add basic automation tests for the scheduler.'
+    ],
+    failsafe: 'Stick to the working SVS -> DZI local conversion pipeline. Do not overwork the NAS compute resources.'
   },
   // ...
 ];
-```
+Updating Page Volume
+The dashboard automatically fetches data from Heading_Pages_Export.csv. To update page counts:
 
-#### Updating Page Volume
-The dashboard automatically fetches data from `Heading_Pages_Export.csv`. To update page counts:
-1. Update your Word/PDF document.
-2. Export the heading/page count to a CSV named `Heading_Pages_Export.csv` in the same folder.
-3. Refresh the browser.
+Update your Word/PDF document.
 
-## 📂 File Structure
-```text
+Export the heading/page count to a CSV named Heading_Pages_Export.csv in the same folder.
+
+Refresh the browser.
+
+📂 File Structure
+Plaintext
 ├── index.html                 # The main dashboard
 └── Heading_Pages_Export.csv   # Page count data for the Volume Tracker
-```
-
-## ⚠️ Warning
-**Do not spend more than 15 minutes a week updating this dashboard.** If you find yourself spending hours polishing the CSS or adding new features to the dashboard, you have fallen into a **Technical Rabbit Hole**. Stop immediately and go back to writing the thesis.
+⚠️ Warning
+Do not spend more than 15 minutes a week updating this dashboard. If you find yourself spending hours polishing the CSS, adding new frameworks, or modifying the JavaScript beyond simple task updates, you have fallen into a Technical Rabbit Hole. Stop immediately, close the IDE, and go back to writing Thesis Part 1.
