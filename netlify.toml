@@ -1,0 +1,7 @@
+[build]
+  publish = "."
+
+[[headers]]
+  for = "*.csv"
+  [headers.values]
+    Content-Type = "text/csv; charset=utf-8"
